@@ -17,7 +17,7 @@ def data_generating_process(mu, sigma, obs, seed = None):
 
     return data
 
-def kolmogorov_smirnov_test(data, mu, sigma):
+def d_calculation(data, mu, sigma):
     data = np.sort(data)
     d = 0
     for i in np.arange(data[0], data[-1], 0.1):
@@ -32,23 +32,22 @@ def kolmogorov_smirnov_test(data, mu, sigma):
 
 def main():
 
-
-    # SIMULATION I: data is sampled from the dirtibution we are testing.
+    # SIMULATION I: data is sampled from the distributions we are testing.
     mu = 10
     sigma = 3
     n = 100
-    experimets = 500
+    experiments = 500
 
     d = []
 
-    for i in range(experimets):
+    for i in range(experiments):
         data = data_generating_process(mu, sigma, n)
-        d.append(kolmogorov_smirnov_test(data, mu, sigma))
+        d.append(d_calculation(data, mu, sigma))
 
-    threshold = (1.36)/(pow(n, 0.5))
+    threshold = 1.36 / (pow(n, 0.5))
 
     d = np.sort(d)
-    p = np.searchsorted(d, threshold, side='right') /d.size
+    p = np.searchsorted(d, threshold, side='right') / d.size
     print(p)
 
     plt.title("Experiments: 500, sample size: 100")
@@ -60,13 +59,13 @@ def main():
     mu = 10
     sigma = 3
     n = 1000
-    experimets = 500
+    experiments = 500
 
     d = []
 
-    for i in range(experimets):
+    for i in range(experiments):
         data = data_generating_process(mu, sigma, n)
-        d.append(kolmogorov_smirnov_test(data, mu, sigma))
+        d.append(d_calculation(data, mu, sigma))
 
     threshold = (1.36)/(pow(n, 0.5))
 
@@ -84,13 +83,13 @@ def main():
     mu = 10
     sigma = 3
     n = 100
-    experimets = 500
+    experiments = 500
 
     d = []
 
-    for i in range(experimets):
+    for i in range(experiments):
         data = data_generating_process(mu, sigma, n)
-        d.append(kolmogorov_smirnov_test(data, 9.9, 2.9))
+        d.append(d_calculation(data, 9.9, 2.9))
 
     threshold = (1.36)/(pow(n, 0.5))
 
@@ -102,19 +101,18 @@ def main():
     plt.hist(d, 25)
     plt.axvline(x = threshold, color = "red")
     plt.show()
-
-    # SIMULATION IV: data is sampled from a distribution slightly different from the distribution for which we are testing
+                                                                                 # SIMULATION IV: data is sampled from a distribution slightly different from the distribution for which we are testing
 
     mu = 10
     sigma = 3
     n = 1000
-    experimets = 500
+    experiments = 500
 
     d = []
 
-    for i in range(experimets):
+    for i in range(experiments):
         data = data_generating_process(mu, sigma, n)
-        d.append(kolmogorov_smirnov_test(data, 9.9, 2.9))
+        d.append(d_calculation(data, 9.9, 2.9))
 
     threshold = (1.36) / (pow(n, 0.5))
 
@@ -126,20 +124,19 @@ def main():
     plt.hist(d, 25)
     plt.axvline(x=threshold, color="red")
     plt.show()
-
 
     # SIMULATION V: data is sampled from a distribution slightly different from the distribution for which we are testing
 
     mu = 10
     sigma = 3
     n = 100
-    experimets = 500
+    experiments = 500
 
     d = []
 
-    for i in range(experimets):
+    for i in range(experiments):
         data = data_generating_process(mu, sigma, n)
-        d.append(kolmogorov_smirnov_test(data, 9, 5))
+        d.append(d_calculation(data, 9, 5))
 
     threshold = (1.36) / (pow(n, 0.5))
 
@@ -151,12 +148,6 @@ def main():
     plt.hist(d, 25)
     plt.axvline(x=threshold, color="red")
     plt.show()
-
-
-
-
-
-
 
 
 ### PROPOSED EXERCISE ON MONTECARLO SIMULATION
@@ -244,9 +235,6 @@ def exercise():
     ax2.set_title("Scenario 2")
 
     plt.show()
-
-
-
 
 
 if __name__ == "__main__":
