@@ -1,6 +1,6 @@
 # Variance-Bias tradeoff
 
-$$ \mathbf{E}[\mathcal{L}(Y, f(X) | X = x)] $$
+$$ \mathbf{E}[\mathcal{L}(Y, f(X) | X = x)] $$ = \sigma_{\epsilon}
 
 
 
