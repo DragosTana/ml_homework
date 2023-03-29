@@ -69,8 +69,7 @@ def main():
     print(mse)    
     plt.plot(x_test, y_test, 'o', c = 'green')
     plt.plot(x_test, values, 'o', c = 'red')
-    
-    plt.plot(x_train, y_train, 'o')
+    #plt.plot(x_train, y_train, 'o')
     plt.show()
     
     
