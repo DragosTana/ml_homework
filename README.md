@@ -1,6 +1,6 @@
 # Statistical Learning assignments
 
-During the course of statistical learning several homeworks were assigned. This repository contains both the code, the presentations and some sparse notes.
+During the course of statistical learning several homeworks were assigned. This repository contains both the code and the presentations of such homeworks, some sparse notes relative to the course might be present.
 
 ## Homework 1: Montecarlo Simulation
 
