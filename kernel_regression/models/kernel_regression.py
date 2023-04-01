@@ -1,11 +1,11 @@
 
 import numpy as np
-import kernel as ker
+import models.kernel as ker
 
 
 class kernel_regression:
     def __init__(self, feature, values, type = "nadaraya_watson", kernel = ker.kernel("gaussian"), bandwidth = 1):
-        self.kernel = kernel
+        self.kernel = ker.kernel(kernel)
         self.feature = feature
         self.values = values
         self. bandwidth = bandwidth
