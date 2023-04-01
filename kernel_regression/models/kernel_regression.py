@@ -6,7 +6,7 @@ import misc as misc
 
 class kernel_regression:
     
-    def __init__(self, feature, values, type = "nadaraya_watson", kernel = ker.kernel("gaussian"), bandwidth = 1.0):
+    def __init__(self, feature, values, type = "nadaraya_watson", kernel = "gaussian", bandwidth = 1.0):
         """
         feature: list of features
         values: list of values
