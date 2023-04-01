@@ -1,10 +1,10 @@
 import models.kernel as ker
 import models.kernel_regression as ker_reg
+import models.knn as knn
 from sklearn.model_selection import KFold
 
 from sklearn.model_selection import train_test_split
 from matplotlib import pyplot as plt
-from mpl_toolkits import mplot3d
 import numpy as np
 import misc
 
@@ -47,14 +47,22 @@ def regression2D():
     plt.show()
     
 
-def regression3D():
-    fig = plt.figure()
-    ax = plt.axes(projection='3d')
+def main():
+    
+    y, x = misc.data_generating_process(1000)
     
     
-    x, y, z = misc.data_generating_process(2000, feature = 3)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.33, random_state = 42)
+    knn_reg = knn.knn(x_train, y_train, 5)
+    pred = []
     
-    ax.scatter(x, y, z, 'o', c = z)
+    for x in x_test:
+        pred.append(knn_reg(x))
+        
+    plt.plot(x_test, pred, "o", color = "red")
+    plt.plot(x_test, y_test, "o", color = "green")
     plt.show()
-
-regression2D()
+    
+if __name__ == "__main__":
+    main()        
+    
