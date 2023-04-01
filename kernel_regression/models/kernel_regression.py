@@ -1,6 +1,7 @@
 
 import numpy as np
 import models.kernel as ker
+import misc as misc
 
 
 class kernel_regression:
@@ -12,6 +13,8 @@ class kernel_regression:
         type: "nadaraya_watson" or "priestley_chao"
         kernel: "gaussian", "uniform", "triangular", "epanechnikov", "cosine"
         bandwidth: float
+        
+        Naive implementation of kernel regression.
         """
         self.kernel = ker.kernel(kernel)
         self.feature = feature
@@ -38,3 +41,9 @@ class kernel_regression:
         if self.type == "priestley_chao":
             pass
     
+    def predict(self, x_test, y_test):
+        pred = []
+        for x in x_test:
+            pred.self.__call__(x)
+        mse = misc.MSE(y_test, pred)
+        return pred, mse
