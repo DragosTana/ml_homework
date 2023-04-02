@@ -3,12 +3,12 @@ import numpy as np
 
 def data_generating_process(dimensions = 100, feature =  2):
     
-    if feature == 2:
+    if feature == 1:
         X = np.random.uniform(0, 20, dimensions)
-        Y = [(x ** 2)*np.cos(x) + np.random.normal(0, 40) for x in X]
+        Y = [(x ** 2)*np.cos(x) + np.random.normal(0, 20) for x in X]
         return(Y,X)
     
-    if feature == 3:
+    if feature == 2:
         X, Y = np.random.uniform(-20, 20, dimensions), np.random.uniform(-20, 20, dimensions)
         Z = [(X ** 2)*np.cos(X) + (Y **2)*np.cos(Y) + np.random.normal(0, 10) for X, Y in zip(X, Y)]
         return(X, Y, Z)

@@ -23,8 +23,8 @@ class KernelRegression(BaseEstimator, RegressorMixin):
     def fit(self, X, y):
         X, y = check_X_y(X, y, accept_sparse=True)
         self.is_fitted_ = True
-        self.X_ = X
-        self.y_ = y
+        self.X_ = np.array(X)
+        self.y_ = np.array(y)
         return self
     
     def predict(self, X):
@@ -34,21 +34,28 @@ class KernelRegression(BaseEstimator, RegressorMixin):
         
         if self.reg_type == "nadaraya_watson":
             pred = []
-            for x in X:
-                tmp = [x - v for v in self.X_]
-                ker_values = [(1/self.bandwidth)*self.kernel(v/self.bandwidth) for v in tmp]
-
-                ker_values = np.array(ker_values)
-                values = np.array(self.y_)
-
-                num = np.dot(ker_values.T, values)
-                denom = np.sum(ker_values)
-
-                pred.append(num/denom)
-            return pred
-
            
+            f = lambda x: (1/self.bandwidth)*self.kernel(x/self.bandwidth)
+            ker_f = np.vectorize(f)
+            for x in X:
+                tmp = np.subtract((np.full((len(self.X_), 1), x)), self.X_)
+                ker = ker_f(tmp)
+
+                pred.append(np.dot(ker.T, self.y_)/np.sum(ker))
+            return pred
         
         if self.reg_type == "Priestley_Chao":
-            pass
+            
+            pred = []
+            for x in X:
+                tmp = 0
+                for i in range(1, len(self.X_)):
+                    tmp = tmp + (self.X_[i]- self.X_[i-1]) * self.kernel((x-self.X_[i])/(self.bandwidth)) *  self.y_[i]
+                pred.append((1/self.bandwidth)*tmp)
+            
+            return(pred)
+                
+                
+
+        
         
