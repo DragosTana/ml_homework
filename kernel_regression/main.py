@@ -23,7 +23,7 @@ from matplotlib import pyplot as plt
 
 def montecarlo():
     
-    montecarslo_simulation = 100
+    montecarslo_simulation = 300
     error_knn = []
     error_reg = []
     
@@ -32,7 +32,7 @@ def montecarlo():
     for i in tqdm (range (montecarslo_simulation), desc="Loading..."):
         
         #generate data for every simulation
-        X, Y = misc.data_generating_process(dimensions = 1000, feature = 1)
+        X, Y = misc.data_generating_process(dimensions = 500, feature = 1)
         
         #split data into train and test
         x_train, x_test, y_train, y_test = train_test_split(Y, X, test_size = 0.2)
@@ -72,7 +72,7 @@ def montecarlo():
     np.savetxt("error_knn_1000.csv", error_knn, delimiter=",")
     np.savetxt("error_reg_1000.csv", error_reg, delimiter=",")
     
-def main(): 
+def main():
     pass
 
 def demo1():
