@@ -46,7 +46,9 @@ class KernelRegression(BaseEstimator, RegressorMixin):
 
                 pred.append(num/denom)
             return pred
+
+           
         
-        if self.reg_type == "Priestley–Chao":
+        if self.reg_type == "Priestley_Chao":
             pass
         
