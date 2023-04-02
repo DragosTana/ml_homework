@@ -5,7 +5,7 @@ def data_generating_process(dimensions = 100, feature =  2):
     
     if feature == 2:
         X = np.random.uniform(0, 20, dimensions)
-        Y = [(x ** 2)*np.cos(x) + np.random.normal(0, 20) for x in X]
+        Y = [(x ** 2)*np.cos(x) + np.random.normal(0, 40) for x in X]
         return(Y,X)
     
     if feature == 3:
@@ -41,3 +41,6 @@ def MSE(y, y_pred):
 
 def RMSE(y, y_pred):
     return np.sqrt(MSE(y, y_pred))
+
+def cross_validation():
+    pass

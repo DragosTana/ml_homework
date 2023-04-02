@@ -1,49 +1,52 @@
 
 import numpy as np
+from sklearn.base import BaseEstimator, RegressorMixin
+from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
+
 import models.kernel as ker
-import misc as misc
-
-
-class kernel_regression:
+        
     
-    def __init__(self, feature, values, type = "nadaraya_watson", kernel = "gaussian", bandwidth = 1.0):
-        """
-        feature: list of features
-        values: list of values
-        type: "nadaraya_watson" or "priestley_chao"
-        kernel: "gaussian", "uniform", "triangular", "epanechnikov", "cosine"
-        bandwidth: float
-        
-        Naive implementation of kernel regression.
-        """
-        self.kernel = ker.kernel(kernel)
-        self.feature = feature
-        self.values = values
-        self. bandwidth = bandwidth
-        self.type = type
+class KernelRegression(BaseEstimator, RegressorMixin):
+    """
+    kernel_type: "gaussian", "uniform", "triangular", "epanechnikov", "cosine"
+    bandwidth: float
     
-    def __call__(self, x):
+    Kernel regression model compatible with sklearn. 
+    """
+
+    def __init__(self, kernel_type  = "gaussian", bandwidth = 1.0, reg_type = "nadaraya_watson"):
+        self.bandwidth = bandwidth
+        self.kernel_type = kernel_type
+        self.kernel = ker.Kernel(kernel_type)
+        self.reg_type = reg_type
         
-        if self.type == "nadaraya_watson":
-            
-            #TODO: optimize
-            tmp = [x - v for v in self.feature]
-            ker_values = [(1/self.bandwidth)*self.kernel(v/self.bandwidth) for v in tmp]
-
-            ker_values = np.array(ker_values)
-            values = np.array(self.values)
-
-            num = np.dot(ker_values.T, values)
-            denom = np.sum(ker_values)
-
-            return num/denom
+    def fit(self, X, y):
+        X, y = check_X_y(X, y, accept_sparse=True)
+        self.is_fitted_ = True
+        self.X_ = X
+        self.y_ = y
+        return self
+    
+    def predict(self, X):
         
-        if self.type == "priestley_chao":
+        X = check_array(X, accept_sparse=True)
+        check_is_fitted(self, 'is_fitted_')
+        
+        if self.reg_type == "nadaraya_watson":
+            pred = []
+            for x in X:
+                tmp = [x - v for v in self.X_]
+                ker_values = [(1/self.bandwidth)*self.kernel(v/self.bandwidth) for v in tmp]
+
+                ker_values = np.array(ker_values)
+                values = np.array(self.y_)
+
+                num = np.dot(ker_values.T, values)
+                denom = np.sum(ker_values)
+
+                pred.append(num/denom)
+            return pred
+        
+        if self.reg_type == "Priestley–Chao":
             pass
-    
-    def predict(self, x_test, y_test):
-        pred = []
-        for x in x_test:
-            pred.self.__call__(x)
-        mse = misc.MSE(y_test, pred)
-        return pred, mse
+        

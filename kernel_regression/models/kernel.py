@@ -1,7 +1,7 @@
 import numpy as np
             
 
-class kernel:
+class Kernel:
     def __init__(self, kernel_type = "gaussian"):
         self.kernel_type = kernel_type
               
