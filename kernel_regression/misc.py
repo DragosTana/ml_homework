@@ -7,13 +7,34 @@ def data_generating_process(dimensions = 100, feature =  2):
     if feature == 1:
         X = np.random.uniform(0, 20, dimensions)
         X = np.sort(X)
-        Y = [(x ** 2)*np.cos(x) + np.random.normal(0, 20) for x in X]
-        return(Y,X)
+        Y = [(x ** 2)*np.cos(x) + np.random.normal(0, 20 + 5*x) for x in X]
+        Y2 = [(x ** 2)*np.cos(x) for x in X]
+        return(Y, Y2, X)
     
     if feature == 2:
-        X, Y = np.random.uniform(-20, 20, dimensions), np.random.uniform(-20, 20, dimensions)
-        Z = [(X ** 2)*np.cos(X) + (Y **2)*np.cos(Y) + np.random.normal(0, 10) for X, Y in zip(X, Y)]
-        return(X, Y, Z)
+        X = np.random.uniform(-10, 30, dimensions)
+        X = np.sort(X)
+        Y = [(x ** 2)*np.cos(x) + np.random.normal(0, 20 ) for x in X]
+        Y2 = [(x ** 2)*np.cos(x) for x in X]
+        return(Y, Y2, X)
+    
+    if feature == 3:
+
+        mu, sigma = 0, 3
+        mu2, sigma2 = 20, 3
+        X1 = np.random.normal(mu, sigma, int(dimensions/2))
+        X2 = np.random.normal(mu2, sigma2, int(dimensions/2))
+        X = np.concatenate([X1, X2])
+        X = np.sort(X)
+        Y = [(x ** 2)*np.cos(x) + np.random.normal(0, 40) for x in X]
+        Y2 = [(x ** 2)*np.cos(x) for x in X]
+        
+        return(Y, Y2, X)
+        
+        
+         
+        
+        
     
 def load_csv(file_name):
     data = []

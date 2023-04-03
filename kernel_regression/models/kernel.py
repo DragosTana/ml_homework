@@ -2,7 +2,7 @@ import numpy as np
             
 
 class Kernel:
-    def __init__(self, kernel_type = "gaussian"):
+    def __init__(self, kernel_type = "epanechnikov"):
         self.kernel_type = kernel_type
               
     def __call__(self, value):

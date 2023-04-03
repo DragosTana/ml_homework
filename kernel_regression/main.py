@@ -106,15 +106,56 @@ def montecarlo_kernel():
     plt.xticks(range(len(kernel)), list(kernel.keys()))
     plt.show()
 
+def montecarlo_eteroschedacity():
+        error_omo = []
+    
+    #generate data for every simulation
+        X_omo, Y_omo = misc.data_generating_process(dimensions = 500, feature = 1)
+        
+        #split data into train and test
+        x_train_omo, x_test_omo, y_train_omo, y_test_omo = train_test_split(Y_omo, X_omo, test_size = 0.2)
+        x_train_omo = np.array(x_train_omo).reshape(-1,1)
+        x_test_omo = np.array(x_test_omo).reshape(-1,1)
+        
+        ker2 = reg.KernelRegression()
+        param_grid = { "bandwidth": np.arange(0.02, 0.4, 0.02) }
+        ker_gscv = GridSearchCV(ker2, param_grid, cv=5, scoring="neg_mean_squared_error")
+        ker_gscv.fit(x_train_omo, y_train_omo)
+        
+        #p2 = mp.Process(target= GridSearchCV(ker2, param_grid, cv=5, scoring="neg_mean_squared_error").fit(x_train, y_train))
+        
+        #get best estimator for both KNN and Kernel Regression
+
+        ker_best = ker_gscv.best_estimator_
+        
+        #predict values for both KNN and Kernel Regression
+
+        ker_pred = ker_best.predict(x_test_omo)
+        
+ 
+        error_omo.append(mean_squared_error(y_test_omo, ker_pred))
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
 def demo1():
     
     #generate data with data_generating_process function in misc.py, you can modify the function to generate data with different features
-    X, Y = misc.data_generating_process(dimensions = 1000, feature = 1)
+    _, Y3, X3 = misc.data_generating_process(dimensions = 1000, feature = 2)
+    Y, Y2, X = misc.data_generating_process(dimensions=1000, feature=3)
     
     #uncomment the following lines to plot the data:
     
-    plt.plot(Y, X, 'o')
-    plt.show()
+    plt.plot(X, Y, '.', c = "red")
+    plt.plot(X3, Y3, c = "blue")
+    #plt.show()
     
     #split data into train and test using the train_test_split function from sklearn.model_selection. 0.2 means 20% of the data is used for testing
     x_train, x_test, y_train, y_test = train_test_split(Y, X, test_size = 0.2)
@@ -122,23 +163,25 @@ def demo1():
     # reshape data to be compatible with the sklearn framework
     x_train = np.array(x_train).reshape(-1,1)
     x_test = np.array(x_test).reshape(-1,1)
-
+    x_test = np.sort(x_test)
+    x_train = np.sort(x_train)
     
     #create kernel regression and knn regression objects
-    ker_reg = reg.KernelRegression(kernel_type = "gaussian", bandwidth = 0.2, reg_type= "nadaraya_watson")
-    knn_reg = KNN(n_neighbors = 10)
+    ker_reg = reg.KernelRegression(kernel_type = "gaussian", bandwidth = 0.25, reg_type= "nadaraya_watson")
+    #knn_reg = KNN(n_neighbors = 10)
     
     #use fit function to fit the model to the training data
     ker_reg.fit(x_train, y_train)
-    knn_reg.fit(x_train, y_train)
+    #knn_reg.fit(x_train, y_train)
     
     #use predict function to predict the test data
-    pred_ker = ker_reg.predict(x_test)
-    pred_knn = knn_reg.predict(x_test)
+    pred_ker = ker_reg.predict(np.arange(-10, 30, 1).reshape(-1,1))
+    #pred_knn = knn_reg.predict(x_test)
     
-    plt.plot(x_test, y_test, 'o', label = "test data", color = "red")
-    plt.plot(x_test, pred_ker,  'o', label = "kernel regression", color = "blue")
-    plt.plot(x_test, pred_knn, 'o', label = "knn regression", color = "green")
+    
+    #plt.plot(x_test, y_test, 'o', label = "test data", color = "red")
+    plt.plot(np.arange(-10, 30, 1), pred_ker,   label = "kernel regression", color = "green")
+    #plt.plot(x_test, pred_knn, 'o', label = "knn regression", color = "green")
     plt.legend()
     plt.show()    
     
@@ -209,6 +252,8 @@ def demo2():
     plt.plot(np.arange(0.02, 0.4, 0.02), error)
     plt.show()
     
+
+    
  
 if __name__ == "__main__":
-    montecarlo_kernel()
+    demo1()
