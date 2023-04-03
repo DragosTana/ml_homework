@@ -14,4 +14,6 @@ The objective of this homeowork was to understand the porpouse of the kernel met
 
 **The kernel regression implemented is compatible with the scikit-learn framework.** This means it can used, like any other regressor of scikit-learn, in its grid search and cross validation functions.
 
+A Montecarlo Simulation was setuped to evaluate the difference between kernel regression and KNN. The results seem to be in favor of the kernel regression.
+
 
