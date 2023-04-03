@@ -12,7 +12,7 @@ def data_generating_process(dimensions = 100, feature =  2):
         return(Y, Y2, X)
     
     if feature == 2:
-        X = np.random.uniform(-10, 25, dimensions)
+        X = np.random.uniform(0, 20, dimensions)
         X = np.sort(X)
         Y = [(x ** 2)*np.cos(x) + np.random.normal(0, 20 ) for x in X]
         Y2 = [(x ** 2)*np.cos(x) for x in X]
@@ -20,8 +20,8 @@ def data_generating_process(dimensions = 100, feature =  2):
     
     if feature == 3:
 
-        mu, sigma = 0, 1.5
-        mu2, sigma2 = 15, 1.5
+        mu, sigma = 0, 2
+        mu2, sigma2 = 17, 2
         X1 = np.random.normal(mu, sigma, int(dimensions/2))
         X2 = np.random.normal(mu2, sigma2, int(dimensions/2))
         X = np.concatenate([X1, X2])
@@ -29,6 +29,13 @@ def data_generating_process(dimensions = 100, feature =  2):
         Y = [(x ** 2)*np.cos(x) + np.random.normal(0, 40) for x in X]
         Y2 = [(x ** 2)*np.cos(x) for x in X]
         
+        return(Y, Y2, X)
+
+    if feature == 4:
+        X = np.random.uniform(0, 20, dimensions)
+        X = np.sort(X)
+        Y = [(x ** 2)*np.cos(x) + np.random.normal(0, 20) for x in X]
+        Y2 = [(x ** 2)*np.cos(x) for x in X]
         return(Y, Y2, X)
         
         

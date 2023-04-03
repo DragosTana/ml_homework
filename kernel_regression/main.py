@@ -148,7 +148,7 @@ def nonomogenity():
     param_grid = { "bandwidth": np.arange(0.05, 1, 0.05) }
     ker_gscv = GridSearchCV(ker2, param_grid, cv=5, scoring="neg_mean_squared_error")
     ker_gscv.fit(x, y)
-    x_pred = np.array(np.arange(-10, 25, 0.1)).reshape(-1,1)
+    x_pred = np.array(np.arange(-5, 22, 0.1)).reshape(-1,1)
     y_pred = ker_gscv.predict(x_pred)
     
     plt.plot(x, y, ".")
@@ -158,16 +158,51 @@ def nonomogenity():
     
     plt.show()
     
+def heteroschedacity():
+    
+    #generate data from non uniform distribution:
+    
+    y, _, x = misc.data_generating_process(dimensions= 500, feature=1)
+    x = np.array(x).reshape(-1, 1)
+    _, y_func, x_func = misc.data_generating_process(dimensions = 500, feature=2)
 
     
+    ker2 = reg.KernelRegression()
+    param_grid = { "bandwidth": np.arange(0.05, 1, 0.05) }
+    ker_gscv = GridSearchCV(ker2, param_grid, cv=5, scoring="neg_mean_squared_error")
+    ker_gscv.fit(x, y)
+    x_pred = np.array(np.arange(0, 20, 0.1)).reshape(-1,1)
+    y_pred = ker_gscv.predict(x_pred)
     
+    plt.plot(x, y, ".")
+    plt.plot(x_func, y_func, label = "function",linewidth=1.5)
+    plt.plot(x_pred, y_pred, label = "kernel regression", linewidth=1.5)
+    plt.legend()
     
+    plt.show()
     
+def omoschedacity():
     
+    #generate data from non uniform distribution:
     
+    y, _, x = misc.data_generating_process(dimensions= 500, feature=4)
+    x = np.array(x).reshape(-1, 1)
+    _, y_func, x_func = misc.data_generating_process(dimensions = 500, feature=2)
+
+    ker2 = reg.KernelRegression()
+    param_grid = { "bandwidth": np.arange(0.05, 1, 0.05) }
+    ker_gscv = GridSearchCV(ker2, param_grid, cv=5, scoring="neg_mean_squared_error")
+    ker_gscv.fit(x, y)
+    x_pred = np.array(np.arange(0, 20, 0.1)).reshape(-1,1)
+    y_pred = ker_gscv.predict(x_pred)
     
+    plt.plot(x, y, ".")
+    plt.plot(x_func, y_func, label = "function",linewidth=1.5)
+    plt.plot(x_pred, y_pred, label = "kernel regression", linewidth=1.5)
+    plt.legend()
     
-    
+    plt.show()
+     
 def demo1():
     
     #generate data with data_generating_process function in misc.py, you can modify the function to generate data with different features
@@ -275,8 +310,5 @@ def demo2():
     plt.plot(np.arange(0.02, 0.4, 0.02), error)
     plt.show()
     
-
-    
- 
 if __name__ == "__main__":
-    nonomogenity()
+    omoschedacity()
