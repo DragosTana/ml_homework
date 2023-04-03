@@ -14,7 +14,7 @@ class KernelRegression(BaseEstimator, RegressorMixin):
     Kernel regression model compatible with sklearn. 
     """
 
-    def __init__(self, kernel_type  = "gaussian", bandwidth = 1.0, reg_type = "nadaraya_watson"):
+    def __init__(self, kernel_type  = "gaussian", bandwidth = 0.25, reg_type = "nadaraya_watson"):
         self.bandwidth = bandwidth
         self.kernel_type = kernel_type
         self.kernel = ker.Kernel(kernel_type)

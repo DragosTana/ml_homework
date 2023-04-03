@@ -1,10 +1,12 @@
 import numpy as np
+import csv
 
 
 def data_generating_process(dimensions = 100, feature =  2):
     
     if feature == 1:
         X = np.random.uniform(0, 20, dimensions)
+        X = np.sort(X)
         Y = [(x ** 2)*np.cos(x) + np.random.normal(0, 20) for x in X]
         return(Y,X)
     
@@ -12,6 +14,17 @@ def data_generating_process(dimensions = 100, feature =  2):
         X, Y = np.random.uniform(-20, 20, dimensions), np.random.uniform(-20, 20, dimensions)
         Z = [(X ** 2)*np.cos(X) + (Y **2)*np.cos(Y) + np.random.normal(0, 10) for X, Y in zip(X, Y)]
         return(X, Y, Z)
+    
+def load_csv(file_name):
+    data = []
+    with open(file_name, 'r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        for line in csv_reader:
+            point = []
+            for word in line:
+                point.append(float(word))
+            data.append(point)
+    return data
 
 def input_DGP(function, dimensions):
     """
