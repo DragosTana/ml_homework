@@ -135,6 +135,29 @@ def montecarlo_eteroschedacity():
  
         error_omo.append(mean_squared_error(y_test_omo, ker_pred))
 
+def nonomogenity():
+    
+    #generate data from non uniform distribution:
+    
+    y, _, x = misc.data_generating_process(dimensions= 500, feature=3)
+    x = np.array(x).reshape(-1, 1)
+    _, y_func, x_func = misc.data_generating_process(dimensions = 500, feature=2)
+
+    
+    ker2 = reg.KernelRegression()
+    param_grid = { "bandwidth": np.arange(0.05, 1, 0.05) }
+    ker_gscv = GridSearchCV(ker2, param_grid, cv=5, scoring="neg_mean_squared_error")
+    ker_gscv.fit(x, y)
+    x_pred = np.array(np.arange(-10, 25, 0.1)).reshape(-1,1)
+    y_pred = ker_gscv.predict(x_pred)
+    
+    plt.plot(x, y, ".")
+    plt.plot(x_func, y_func, label = "function",linewidth=1.5)
+    plt.plot(x_pred, y_pred, label = "kernel regression", linewidth=1.5)
+    plt.legend()
+    
+    plt.show()
+    
 
     
     
@@ -167,7 +190,7 @@ def demo1():
     x_train = np.sort(x_train)
     
     #create kernel regression and knn regression objects
-    ker_reg = reg.KernelRegression(kernel_type = "gaussian", bandwidth = 0.25, reg_type= "nadaraya_watson")
+    ker_reg = reg.KernelRegression(kernel_type = "gaussian", bandwidth = 0., reg_type= "nadaraya_watson")
     #knn_reg = KNN(n_neighbors = 10)
     
     #use fit function to fit the model to the training data
@@ -180,7 +203,7 @@ def demo1():
     
     
     #plt.plot(x_test, y_test, 'o', label = "test data", color = "red")
-    plt.plot(np.arange(-10, 30, 1), pred_ker,   label = "kernel regression", color = "green")
+    plt.plot(np.arange(-10, 30, 1), pred_ker, label = "kernel regression", color = "green")
     #plt.plot(x_test, pred_knn, 'o', label = "knn regression", color = "green")
     plt.legend()
     plt.show()    
@@ -256,4 +279,4 @@ def demo2():
     
  
 if __name__ == "__main__":
-    demo1()
+    nonomogenity()
