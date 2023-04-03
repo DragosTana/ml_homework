@@ -16,4 +16,9 @@ The objective of this homeowork was to understand the porpouse of the kernel met
 
 A Montecarlo Simulation was setuped to evaluate the difference between kernel regression and KNN. The results seem to be in favor of the kernel regression.
 
+![results](/images/1000_700png.png )
+
+Several other properties of kernel regression were evaluated like what type of kernel is the best, how does this regression perform when data is not sampled uniformly and also its behaviour in case of heteroscedasticity.
+
+![results](/images/200sim_500obs.png)
 
