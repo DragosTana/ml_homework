@@ -10,4 +10,8 @@ The objective of this homework was to use montecarlo simulation to verify a stat
 
 ## Homework 2: Kernel density estimation and kernel regression
 
-The objective of this homeowork was to understand the porpouse of the kernel methods and prepair a presentation on an interesting aspect. The presentation can focus on theory, applications, computation or simulation. My attention was focused on [kernel regression](https://en.wikipedia.org/wiki/Kernel_regression) and its naive implementation
+The objective of this homeowork was to understand the porpouse of the kernel methods and prepair a presentation on an interesting aspect. The presentation can focus on theory, applications, computation or simulation. My attention was focused on [kernel regression](https://en.wikipedia.org/wiki/Kernel_regression) and its naive implementation.
+
+**The kernel regression implemented is compatible with the scikit-learn framework.** This means it can used, like any other regressor of scikit-learn, in its grid search and cross validation functions.
+
+
