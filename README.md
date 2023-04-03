@@ -16,4 +16,6 @@ The objective of this homeowork was to understand the porpouse of the kernel met
 
 A Montecarlo Simulation was setuped to evaluate the difference between kernel regression and KNN. The results seem to be in favor of the kernel regression.
 
+![results](/images/1000_700png.png )
+
 
