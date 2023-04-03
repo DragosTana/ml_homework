@@ -37,12 +37,15 @@ def data_generating_process(dimensions = 100, feature =  2):
         Y = [(x ** 2)*np.cos(x) + np.random.normal(0, 20) for x in X]
         Y2 = [(x ** 2)*np.cos(x) for x in X]
         return(Y, Y2, X)
-        
-        
-         
-        
-        
     
+    if feature == 5:
+        
+        X = np.random.uniform(0, 20, dimensions)
+        X = np.sort(X)
+        Y = [(3 * x + np.random.normal(0, 3 + 0.5*x)) for x in X]
+        Y2 = [(x ** 2)*np.cos(x) for x in X]
+        return(Y, Y2, X)
+   
 def load_csv(file_name):
     data = []
     with open(file_name, 'r') as csv_file:

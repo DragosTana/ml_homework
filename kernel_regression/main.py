@@ -14,14 +14,6 @@ import csv
 
 from matplotlib import pyplot as plt
 
-
-
-# TODO: 
-# 1) montecarlo simulation to compare the two methods ----> DONE
-# 2) check behaviour in homoschedacity and heteroschedacity
-# 3) corner behaviour
-
-
 def montecarlo():
     
     montecarslo_simulation = 300
@@ -137,13 +129,10 @@ def montecarlo_eteroschedacity():
 
 def nonomogenity():
     
-    #generate data from non uniform distribution:
-    
     y, _, x = misc.data_generating_process(dimensions= 500, feature=3)
     x = np.array(x).reshape(-1, 1)
     _, y_func, x_func = misc.data_generating_process(dimensions = 500, feature=2)
 
-    
     ker2 = reg.KernelRegression()
     param_grid = { "bandwidth": np.arange(0.05, 1, 0.05) }
     ker_gscv = GridSearchCV(ker2, param_grid, cv=5, scoring="neg_mean_squared_error")
@@ -162,22 +151,22 @@ def heteroschedacity():
     
     #generate data from non uniform distribution:
     
-    y, _, x = misc.data_generating_process(dimensions= 500, feature=1)
-    x = np.array(x).reshape(-1, 1)
-    _, y_func, x_func = misc.data_generating_process(dimensions = 500, feature=2)
-
-    
-    ker2 = reg.KernelRegression()
-    param_grid = { "bandwidth": np.arange(0.05, 1, 0.05) }
-    ker_gscv = GridSearchCV(ker2, param_grid, cv=5, scoring="neg_mean_squared_error")
-    ker_gscv.fit(x, y)
-    x_pred = np.array(np.arange(0, 20, 0.1)).reshape(-1,1)
-    y_pred = ker_gscv.predict(x_pred)
+    y, _, x = misc.data_generating_process(dimensions= 1000, feature=5)
+    #x = np.array(x).reshape(-1, 1)
+    #_, y_func, x_func = misc.data_generating_process(dimensions = 500, feature=2)
+#
+    #
+    #ker2 = reg.KernelRegression()
+    #param_grid = { "bandwidth": np.arange(0.05, 1, 0.05) }
+    #ker_gscv = GridSearchCV(ker2, param_grid, cv=5, scoring="neg_mean_squared_error")
+    #ker_gscv.fit(x, y)
+    #x_pred = np.array(np.arange(0, 20, 0.1)).reshape(-1,1)
+    #y_pred = ker_gscv.predict(x_pred)
     
     plt.plot(x, y, ".")
-    plt.plot(x_func, y_func, label = "function",linewidth=1.5)
-    plt.plot(x_pred, y_pred, label = "kernel regression", linewidth=1.5)
-    plt.legend()
+    #plt.plot(x_func, y_func, label = "function",linewidth=1.5)
+    #plt.plot(x_pred, y_pred, label = "kernel regression", linewidth=1.5)
+    #plt.legend()
     
     plt.show()
     
@@ -311,4 +300,4 @@ def demo2():
     plt.show()
     
 if __name__ == "__main__":
-    omoschedacity()
+    heteroschedacity()
