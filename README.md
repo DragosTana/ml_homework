@@ -18,4 +18,7 @@ A Montecarlo Simulation was setuped to evaluate the difference between kernel re
 
 ![results](/images/1000_700png.png )
 
+Several other properties of kernel regression were evaluated like what type of kernel is the best, how does this regression perform when data is not sampled uniformly and also its behaviour in case of heteroscedasticity.
+
+![results] (/images/200sim_500obs.png)
 
