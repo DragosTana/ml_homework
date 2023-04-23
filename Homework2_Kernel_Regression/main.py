@@ -3,14 +3,11 @@ import models.knn as knn
 import misc 
 
 from sklearn.model_selection import train_test_split
-from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.neighbors import KNeighborsRegressor as KNN
-from scipy.stats import gaussian_kde
 from sklearn.metrics import mean_squared_error
 from tqdm import tqdm
 import numpy as np
-import csv
 
 from matplotlib import pyplot as plt
 
@@ -19,7 +16,6 @@ def montecarlo():
     montecarslo_simulation = 300
     error_knn = []
     error_reg = []
-    
     
     #MONTECARLO SIMULATION
     for i in tqdm (range (montecarslo_simulation), desc="Loading..."):
@@ -70,7 +66,6 @@ def montecarlo_kernel():
     error_knn = []
     error_reg = []
     kernel = {"gaussian": 0, "epanechnikov": 0, "uniform": 0, "triangular": 0, "cosine": 0}
-    
     
     #MONTECARLO SIMULATION
     for i in tqdm (range (montecarslo_simulation), desc="Loading..."):
@@ -124,7 +119,6 @@ def montecarlo_eteroschedacity():
 
         ker_pred = ker_best.predict(x_test_omo)
         
- 
         error_omo.append(mean_squared_error(y_test_omo, ker_pred))
 
 def nonomogenity():
@@ -146,6 +140,7 @@ def nonomogenity():
     plt.legend()
     
     plt.show()
+    
     
 def heteroschedacity():
     
@@ -170,6 +165,7 @@ def heteroschedacity():
     
     plt.show()
     
+    
 def omoschedacity():
     
     #generate data from non uniform distribution:
@@ -191,6 +187,7 @@ def omoschedacity():
     plt.legend()
     
     plt.show()
+
      
 def demo1():
     
@@ -298,6 +295,7 @@ def demo2():
     
     plt.plot(np.arange(0.02, 0.4, 0.02), error)
     plt.show()
+
     
 if __name__ == "__main__":
     heteroschedacity()
