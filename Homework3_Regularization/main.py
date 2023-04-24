@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from sklearn.linear_model import LassoCV, RidgeCV, LinearRegression, ElasticNetCV
+from sklearn.linear_model import LassoCV, RidgeCV, LinearRegression, ElasticNetCV, Ridge
 from sklearn import datasets
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
@@ -17,12 +17,7 @@ def generate_data():
     
     #generate covariance matrix 
     mean = np.random.uniform(-5, 5, size = features).astype(int)
-    cov = 4*datasets.make_spd_matrix(features)
-    
-    for e in cov:
-        for i in range(len(e)):
-            if abs(e[i]) < 4:
-                e[i] = 0
+    cov = datasets.make_spd_matrix(features, random_state=101)
                 
     #data generating process
     X = np.random.multivariate_normal(mean, cov, size=size)
@@ -46,23 +41,18 @@ def generate_data():
     np.savetxt("X.csv", X, delimiter=",")
     np.savetxt("mean.csv", mean, delimiter=",")
     np.savetxt("cov.csv", cov, delimiter=",")
-
-    
+ 
 def main():
     beta = [0, 2, -1, 5, 5, 0]
     
-    mean = np.ravel(np.array(load_csv("/home/dragos/Projects/ML_Homework/mean.csv")))
+    #mean = np.ravel(np.array(load_csv("/home/dragos/Projects/ML_Homework/mean.csv")))
+    mean = [0,0,0,0,0,0]
     cov = np.array(load_csv("/home/dragos/Projects/ML_Homework/cov.csv"))
-    
-    linear_reg = LinearRegression()
-    ridge_reg = RidgeCV()
-    lasso_reg = LassoCV()
-    elastic_reg = ElasticNetCV()
     
     #MONTECARLO SIMULATION
     montecarlo_simulation = 1000
-    #sample_num = [100, 200, 500, 1000, 3000, 5000, 10000]
-    sample_num = [100]
+    sample_num = [100, 200, 500, 1000, 3000, 5000, 10000]
+    #sample_num = [100]
     
     for n in sample_num:
         
@@ -76,7 +66,14 @@ def main():
         lasso_reg_scores = []
         elastic_reg_scores = []
         
-        for i in tqdm (range (montecarlo_simulation), desc="Running Monte Carlo Simulation..."):
+        linear_reg = LinearRegression()
+        #ridge_reg = RidgeCV(alphas=np.arange(0.01, 0.5, 0.001))
+        ridge_reg = Ridge(alpha=1)
+        lasso_reg = LassoCV()
+        elastic_reg = ElasticNetCV()
+        
+        print(" ")
+        for i in tqdm (range (montecarlo_simulation), desc="Running Monte Carlo Simulation... "):
 
             X = np.random.multivariate_normal(mean, cov, size=n)
             Y = np.dot(X, beta) + np.random.normal(0, 1, size = n)
@@ -118,8 +115,6 @@ def main():
         np.savetxt("/home/dragos/Projects/ML_Homework/data/lasso_reg_scores_{n}.csv".format(n=n), lasso_reg_scores, delimiter=",")
         np.savetxt("/home/dragos/Projects/ML_Homework/data/elastic_reg_scores_{n}.csv".format(n=n), elastic_reg_scores, delimiter=",")
         
-        print(linear_reg_scores)
-        print(ridge_reg_scores)
 if __name__== "__main__":
     main()
    
