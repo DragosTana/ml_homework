@@ -12,12 +12,12 @@ from os.path import exists
 
 def generate_data():
     #parameters 
-    features = 6
+    features = 4
     size = 1000
     
     #generate covariance matrix 
     mean = np.random.uniform(-5, 5, size = features).astype(int)
-    cov = datasets.make_spd_matrix(features, random_state=101)
+    cov = datasets.make_spd_matrix(features, random_state=1)
                 
     #data generating process
     X = np.random.multivariate_normal(mean, cov, size=size)
@@ -43,10 +43,10 @@ def generate_data():
     np.savetxt("cov.csv", cov, delimiter=",")
  
 def main():
-    beta = [0, 2, -1, 5, 5, 0]
+    beta = [-1, 5, 0.5, 0]
     
     #mean = np.ravel(np.array(load_csv("/home/dragos/Projects/ML_Homework/mean.csv")))
-    mean = [0,0,0,0,0,0]
+    mean = np.zeros(len(beta))
     cov = np.array(load_csv("/home/dragos/Projects/ML_Homework/cov.csv"))
     
     #MONTECARLO SIMULATION
@@ -67,8 +67,8 @@ def main():
         elastic_reg_scores = []
         
         linear_reg = LinearRegression()
-        #ridge_reg = RidgeCV(alphas=np.arange(0.01, 0.5, 0.001))
-        ridge_reg = Ridge(alpha=1)
+        ridge_reg = RidgeCV(alphas=np.arange(0.01, 0.8, 0.001))
+        #ridge_reg = Ridge(alpha=1)
         lasso_reg = LassoCV()
         elastic_reg = ElasticNetCV()
         
@@ -94,7 +94,11 @@ def main():
             ridge_reg_scores.append(ridge_reg.score(x_test, y_test))
             lasso_reg_scores.append(lasso_reg.score(x_test, y_test))
             elastic_reg_scores.append(elastic_reg.score(x_test, y_test))
-
+            
+            #print("alpha ridge: ", ridge_reg.alpha_)
+            #print("alpha lasso: ", lasso_reg.alpha_)
+            #print("alpha elastic: ", elastic_reg.alpha_)
+            
         linear_reg_coef = np.array(linear_reg_coef)
         ridge_reg_coef = np.array(ridge_reg_coef)
         lasso_reg_coef = np.array(lasso_reg_coef)
@@ -117,4 +121,3 @@ def main():
         
 if __name__== "__main__":
     main()
-   

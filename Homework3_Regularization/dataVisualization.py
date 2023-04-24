@@ -68,12 +68,8 @@ def prova():
     plt.plot(sample_num, err_lin, label = "Linear")
     plt.plot(sample_num, err_r, label = "Ridge")
     plt.legend()
-    plt.xscale('log')
     plt.show()
         
-        
-
-
 def main():
     
     X = load_csv("/home/dragos/Projects/ML_Homework/X.csv")
@@ -81,7 +77,7 @@ def main():
     #plot_corr_matrix(X)
     
     sample_num = [100, 200, 500, 1000, 3000, 5000, 10000]
-    beta = [0, 2, -1, 5, 5, 0]
+    beta = [-1, 5, 0.5, 0]
     
     e_mean = []
     las_mean = []
@@ -133,4 +129,7 @@ def main():
     plt.show()
        
 if __name__ == "__main__":
-    main()
+    X = load_csv("/home/dragos/Projects/ML_Homework/X.csv")
+    #plot_corr_matrix(X)
+    #main()
+    prova()
