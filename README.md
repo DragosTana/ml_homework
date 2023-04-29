@@ -21,3 +21,7 @@ A Montecarlo Simulation was setuped to evaluate the difference between kernel re
 Several other properties of kernel regression were evaluated like what type of kernel is the best, how does this regression perform when data is not sampled uniformly and also its behaviour in case of heteroscedasticity.
 
 ![results](/images/Screenshot%20from%202023-04-03%2021-07-53.png)
+
+## Homework 3: Asymptotic behaviour of regularized regression.
+
+![results](/images/beta.png)
